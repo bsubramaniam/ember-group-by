@@ -1,3 +1,4 @@
 import groupBy from './macros/group-by';
+import sortBy from './macros/sort-by';
 
-export default groupBy;
+export { groupBy, sortBy };
