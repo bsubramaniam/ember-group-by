@@ -4,6 +4,15 @@ var computed = Ember.computed;
 var get = Ember.get;
 var isPresent = Ember.isPresent;
 
+function pushToGroup(groups, item, property, value) {
+  var group = groups.findBy('value', value);
+  if (isPresent(group)) {
+    get(group, 'items').push(item);
+  } else {
+    group = { property: property, value: value, items: [item] };
+    groups.push(group);
+  }
+}
 export default function groupBy(element, collection, property) {
   var dependentKey = collection + '.@each.' + property;
   let groupByResult = [];
@@ -14,13 +23,12 @@ export default function groupBy(element, collection, property) {
 
     items.forEach(function(item) {
       var value = get(item, property);
-      var group = groups.findBy('value', value);
-
-      if (isPresent(group)) {
-        get(group, 'items').push(item);
+      if (Ember.isArray(value)) {
+        value.forEach(function(v) {
+          pushToGroup(groups, item, property, v);
+        })
       } else {
-        group = { property: property, value: value, items: [item] };
-        groups.push(group);
+        pushToGroup(groups, item, property, value);
       }
     });
     // groupByResult.clear();
