@@ -13,7 +13,7 @@ function pushToGroup(groups, item, property, value) {
     groups.push(group);
   }
 }
-export default function groupBy(element, collection, property) {
+function groupBy(element, collection, property) {
   var dependentKey = collection + '.@each.' + property;
   let groupByResult = [];
 
@@ -63,3 +63,22 @@ export default function groupBy(element, collection, property) {
   compute();
   return groupByResult;
 }
+
+function groupByFn(element, collection, property) {
+  var groups = [];
+  var items = get(element, collection);
+
+  items.forEach(function(item) {
+    var value = get(item, property);
+    if (Ember.isArray(value)) {
+      value.forEach(function(v) {
+        pushToGroup(groups, item, property, v);
+      })
+    } else {
+      pushToGroup(groups, item, property, value);
+    }
+  });
+  return groups;
+}
+
+export { groupBy, groupByFn }

@@ -1,4 +1,4 @@
-import groupBy from './macros/group-by';
+import {groupBy, groupByFn} from './macros/group-by';
 import sortBy from './macros/sort-by';
 
-export { groupBy, sortBy };
+export { groupBy, groupByFn, sortBy };
