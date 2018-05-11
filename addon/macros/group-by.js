@@ -66,7 +66,7 @@ function groupBy(element, collection, property) {
 
 function groupByFn(element, collection, property) {
   var groups = [];
-  var items = get(element, collection);
+  var items = collection;
 
   items.forEach(function(item) {
     var value = get(item, property);
